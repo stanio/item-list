@@ -12,6 +12,16 @@ java {
     sourceCompatibility = '17'
 }
 
+bootWar {
+  archiveVersion = ''
+  archiveClassifier = 'boot'
+}
+
+war {
+  archiveVersion = ''
+  archiveClassifier = ''
+}
+
 repositories {
     mavenCentral()
 }
