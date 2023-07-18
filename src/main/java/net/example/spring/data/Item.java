@@ -17,14 +17,8 @@ public class Item {
     @Column(nullable = false)
     private String label;
 
-    public Item() {
-        // default, empty
-    }
-
-    public Item(Long id, String label) {
-        this.id = id;
-        this.label = label;
-    }
+    @Column(nullable = false)
+    private String owner;
 
     public Long getId() {
         return id;
@@ -32,6 +26,14 @@ public class Item {
 
     public String getLabel() {
         return label;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public void setLabel(String label) {
