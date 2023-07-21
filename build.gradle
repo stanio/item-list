@@ -12,6 +12,13 @@ java {
     sourceCompatibility = '17'
 }
 
+tasks.register('copyFrontendResources', Copy) {
+    from tasks.getByPath('frontend:npmRunBuild').outputs
+    into file("$buildDir/resources/main/public")
+}
+
+tasks['processResources'].dependsOn 'copyFrontendResources'
+
 bootWar {
   archiveVersion = ''
   archiveClassifier = 'boot'

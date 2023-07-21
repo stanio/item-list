@@ -1,0 +1,46 @@
+plugins {
+    //id 'com.github.node-gradle.node' version '5.0.0'
+    id 'base'
+}
+
+tasks.register('npmInstall', Exec) {
+    group = 'Build'
+    description = 'Executes `npm install`.'
+
+    inputs.file('package.json')
+    outputs.file('package-lock.json')
+    outputs.dir('node_modules')
+
+    if (isWindowsOS()) {
+        commandLine 'cmd', '/c', 'npm', 'install'
+    } else {
+        commandLine '/usr/bin/env', 'npm', 'install'
+    }
+}
+
+tasks.register('npmRunBuild', Exec) {
+    group = 'Build'
+    description = 'Executes `npm run build`.'
+
+    dependsOn 'npmInstall'
+
+    inputs.dir('src')
+    inputs.dir('public')
+    inputs.file('package.json')
+    inputs.file('package-lock.json')
+    inputs.dir('node_modules')
+    outputs.dir('build')
+
+    if (isWindowsOS()) {
+        commandLine 'cmd', '/c', 'npm', 'run', 'build'
+    } else {
+        commandLine '/usr/bin/env', 'npm', 'run', 'build'
+    }
+}
+
+tasks['assemble'].dependsOn 'npmRunBuild'
+
+def isWindowsOS() {
+    return System.getProperty('os.name').
+            toLowerCase(Locale.ROOT).contains('windows')
+}

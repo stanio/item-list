@@ -1,1 +1,3 @@
 rootProject.name = 'item-list'
+
+include 'frontend'
