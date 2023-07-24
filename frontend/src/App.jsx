@@ -9,11 +9,18 @@ export default function App() {
     setLoading(true);
 
     fetch('/item-list/api/items')
-      .then(response => response.json())
+      .then(response => {
+        if (response.status === 401) {
+            // Reloading the top-level page should trigger redirect to login.
+            window.location.reload();
+            return [];
+        }
+        return response.json();
+      })
       .then(data => {
         setItems(data);
         setLoading(false);
-      })
+      });
   }, []);
 
   if (loading) {
